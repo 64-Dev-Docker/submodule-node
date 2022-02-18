@@ -1,7 +1,7 @@
 {
 	"name": "Node.js & TypeScript",
 	"dockerComposeFile": "./docker-compose.yml",
-	"service": "Node-TypeScript",
+	"service": "node-typescript",
 	"workspaceFolder": "/workspace",
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
@@ -68,8 +68,7 @@
 	// 	"source=${localEnv:HOME}/.gnupg,target=/home/vscode/.gnupg,type=bind,consistency=cached",
 	// ],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "bash ./.devcontainer/custom-scripts/git/configure-git.sh",
-	"postStartCommand": "npm install",
+	"postCreateCommand": "bash ./.devcontainer/custom-scripts/git/configure-git.sh && npm init",
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "node"
 }

@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  Node-TypeScript:
+  node-typescript:
     build: 
       context: ../.devcontainer
       dockerfile: Dockerfile
