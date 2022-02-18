@@ -1,55 +1,75 @@
 {
 	"name": "Node.js & TypeScript",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"args": {
-			"VARIANT": "16",
-			"USERNAME": "node"
-		}
-	},
+	"dockerComposeFile": "./docker-compose.yml",
+	"service": "Node-TypeScript",
+	"workspaceFolder": "/workspace",
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
-		"terminal.integrated.shell.linux": "/bin/zsh"
+		// "terminal.integrated.shell.linux": "/usr/bin/zsh",
+		"plantuml.render": "PlantUMLServer",
+		"plantuml.server": "http://plantuml:8081/",
 	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"mutantdino.resourcemonitor",
-		"formulahendry.code-runner",
-		"asciidoctor.asciidoctor-vscode",
-		"donjayamanne.githistory",
-		"mhutchie.git-graph",
+		// my common extensions
 		"alefragnani.bookmarks",
-		"github.vscode-pull-request-github",
+		"asciidoctor.asciidoctor-vscode",
+		"bierner.github-markdown-preview",
+		"DavidAnson.vscode-markdownlint",
+		"donjayamanne.githistory",
+		"dotjoshjohnson.xml",
 		"eamodio.gitlens",
+		"esbenp.prettier-vscode",
+		// "formulahendry.code-runner", // giving us grief
+		"github.vscode-pull-request-github",
+		"hbenl.vscode-test-explorer",
 		"hoovercj.vscode-power-mode",
-    "vtrois.gitmoji-vscode",
+		"jebbs.plantuml",
+		"mhutchie.git-graph",
+		"ms-vscode.test-adapter-converter",
+		"mutantdino.resourcemonitor",
+		"redhat.vscode-yaml",
+		"ritwickdey.liveserver",
+		"ryanluker.vscode-coverage-gutters",
+		"seatonjiang.gitmoji-vscode",
+		"slevesque.vscode-hexdump",
+		"streetsidesoftware.code-spell-checker",
+		"yzhang.markdown-all-in-one",
+		"shd101wyy.markdown-preview-enhanced",
+		// node + typescript
 		"dbaeumer.vscode-eslint",
-		// angular pieces
-		"angular.ng-template",
-		// "johnpapa.angular-essentials",
-		"nrwl.angular-console",
-		"johnpapa.winteriscoming",
-		"pkief.material-icon-theme",
-		"msjsdiag.debugger-for-edge",
-		"firefox-devtools.vscode-firefox-debug",
-		"johnpapa.angular2",
-		"editorconfig.editorconfig",
-		"eg2.vscode-npm-script",
-		"johnpapa.vscode-peacock",
-		"esbenp.prettier-vscode"
 	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [
-		4200,
-		2015
-	],
-	// "mounts": [ "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind" ],
-	"mounts": [
-		"source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached",
-		"source=${localEnv:HOME}/.gnupg,target=/home/node/.gnupg,type=bind,consistency=cached",
-	],
+	// "forwardPorts": [5000, 5001],
+	// [Optional] To reuse of your local HTTPS dev cert:
+	//
+	// 1. Export it locally using this command:
+	//    * Windows PowerShell:
+	//        dotnet dev-certs https --trust; dotnet dev-certs https -ep "$env:USERPROFILE/.aspnet/https/aspnetapp.pfx" -p "SecurePwdGoesHere"
+	//    * macOS/Linux terminal:
+	//        dotnet dev-certs https --trust; dotnet dev-certs https -ep "${HOME}/.aspnet/https/aspnetapp.pfx" -p "SecurePwdGoesHere"
+	// 
+	// 2. Uncomment these 'remoteEnv' lines:
+	//    "remoteEnv": {
+	// 	      "ASPNETCORE_Kestrel__Certificates__Default__Password": "SecurePwdGoesHere",
+	//        "ASPNETCORE_Kestrel__Certificates__Default__Path": "/home/vscode/.aspnet/https/aspnetapp.pfx",
+	//    },
+	//
+	// 3. Do one of the following depending on your scenario:
+	//    * When using GitHub Codespaces and/or Remote - Containers:
+	//      1. Start the container
+	//      2. Drag ~/.aspnet/https/aspnetapp.pfx into the root of the file explorer
+	//      3. Open a terminal in VS Code and run "mkdir -p /home/vscode/.aspnet/https && mv aspnetapp.pfx /home/vscode/.aspnet/https"
+	//
+	//    * If only using Remote - Containers with a local container, uncomment this line instead:
+	//      "mounts": [ "source=${env:HOME}${env:USERPROFILE}/.aspnet/https,target=/home/vscode/.aspnet/https,type=bind" ],
+	// "mounts": [
+	// 	"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+	// 	"source=${localEnv:HOME}/.gnupg,target=/home/vscode/.gnupg,type=bind,consistency=cached",
+	// ],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
+	"postCreateCommand": "bash ./.devcontainer/custom-scripts/git/configure-git.sh",
+	"postStartCommand": "npm install",
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "node"
 }
