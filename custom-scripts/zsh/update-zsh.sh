@@ -3,7 +3,7 @@
 
 USERNAME=${1:-"automatic"}
 
-# If in automatic mode, determine if a user already exists, if not use node
+# If in automatic mode, determine if a user already exists, if not use vscode
 if [ "${USERNAME}" = "auto" ] || [ "${USERNAME}" = "automatic" ]; then
     USERNAME=""
     POSSIBLE_USERS=("vscode" "node" "codespace" "$(awk -v val=1000 -F ":" '$3==val{print $1}' /etc/passwd)")
@@ -14,7 +14,7 @@ if [ "${USERNAME}" = "auto" ] || [ "${USERNAME}" = "automatic" ]; then
         fi
     done
     if [ "${USERNAME}" = "" ]; then
-        USERNAME=node
+        USERNAME=vscode
     fi
 elif [ "${USERNAME}" = "none" ]; then
     USERNAME=root
